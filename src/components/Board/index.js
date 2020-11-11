@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/index.css';
-import { Square } from './square'
+import './styles.css';
+import { Square } from '../Square/index'
 
 export const Board = (props) => {
 
