@@ -1,12 +1,13 @@
 import React from 'react';
-import './styles.css';
+import square from './styles.css';
+import classNames from 'classnames'
 
-export const Square = (props) => {
+export const Square = ({value, onClick}) => {
     return (
         <button
-            className="square"
-            onClick={props.onClick}>
-            {props.value}
+            className={classNames({square})}
+            onClick={onClick}>
+            {value}
         </button>
     );
 }
