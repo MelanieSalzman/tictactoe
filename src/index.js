@@ -1,40 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route
+  BrowserRouter as Router,
+  Switch,
+  Route
 } from "react-router-dom";
 import Game from './components/Game'
 import Login from './components/Login'
+//Providers
+import PlayersInfoContext, { players, setPlayersInfo } from './providers/playersInfo';
 
 function App() {
-    return (
-        <div>
-            <Switch>
-                {/* Note how these two routes are ordered. The more specific
-            path="/contact/:id" comes before path="/contact" so that
-            route will render when viewing an individual contact */}
-                <Route path="/game">
-                    <Game />
-                </Route>
-                {/* If none of the previous routes render anything,
-            this route acts as a fallback.
+  return (
+    <div>
+      <PlayersInfoContext.Provider value={players}>
+        <Switch>
+          <Route path="/game">
+            <Game />
+          </Route>
 
-            Important: A route with path="/" will *always* match
-            the URL because all URLs begin with a /. So that's
-            why we put this one last of all */}
-                <Route path="/">
-                    <Login />
-                </Route>
-            </Switch>
-        </div>
-    );
+          <Route path="/">
+            <Login />
+          </Route>
+        </Switch>
+      </PlayersInfoContext.Provider>
+    </div>
+  );
 }
 
 ReactDOM.render(
-    <Router>
-        <App />
-    </Router>,
-    document.getElementById("root")
+
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
 );

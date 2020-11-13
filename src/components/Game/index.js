@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './styles.css'
 import Board from '../Board'
+import { players } from '../../providers/playersInfo';
 
 const Game = () => {
 
@@ -59,7 +60,7 @@ const Game = () => {
 }
 
 const getGameStatusMessage = (winner, xIsNext) => {
-  return winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O');
+  return winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? players.firstPlayer : players.secondPlayer);
 }
 
 const calculateWinnerLine = squares => {
@@ -73,7 +74,7 @@ const calculateWinnerLine = squares => {
 }
 
 const getWinnerText = (winnerLine, squares) => {
-  return winnerLine && squares[winnerLine[0]]
+  return winnerLine && (squares[winnerLine[0]]==='X' ? players.firstPlayer : players.secondPlayer)
 }
 
 export default Game

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './styles.css'
 import LoginButton from '../LoginButton'
 import TextInput from '../TextInput'
+//Providers
+import { setPlayersInfo } from '../../providers/playersInfo';
 
 const Login = () => {
 
@@ -15,7 +17,10 @@ const Login = () => {
   }
 
   const handleSubmit = () => {
-    alert("Player 1 is " + players.firstPlayer + ' and Player 2 is ' + players.secondPlayer);
+    setPlayersInfo({
+      firstPlayer: players.firstPlayer,
+      secondPlayer:players.secondPlayer
+    });
   }
 
   return (
@@ -29,7 +34,7 @@ const Login = () => {
         <h4>Enter your names to start playing</h4>
         <TextInput name="firstPlayer" placeholder="Player 1" onChange={handleChange} />
         <TextInput name="secondPlayer" placeholder="Player 2" onChange={handleChange} />
-        <LoginButton onClick={handleSubmit}/>
+        <LoginButton onClick={handleSubmit} />
       </form>
     </div>
   )
