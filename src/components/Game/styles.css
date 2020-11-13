@@ -3,8 +3,7 @@
   }
 
 body {
-    margin: 20px;
-    background-image: url(../../assets/background.png);
+    background-image: linear-gradient(rgba(14, 2, 58, 0.5),rgba(14, 2, 58, 0.5)),url(../../assets/background.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -13,16 +12,7 @@ body {
     font-family: 'Goldman', cursive;
     color: white;
   }
-
-  h1 {
-    font-size: 4rem;
-    font-weight: bold;
-  }
-
-  h3 {
-    font-size: 2rem;
-    font-weight: 100;
-  }
+  
 
   ol, ul {
     padding-left: 30px;

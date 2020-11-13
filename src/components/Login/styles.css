@@ -1,31 +1,42 @@
-.background {
-  background: lightgray;
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  flex-wrap: wrap;
 }
 
 .splashText {
-  grid-column: 2 / 6;
+  display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  width: 40%;
+  margin: 4em;
 }
 
-form {
-  grid-column: 7/ 11;
-  background-color: #C8CCDB80;
-  margin-top: 10rem;
+.form {
+  display: flex;
+  background-color: #C8CCDB99;
   padding: 3rem;
   justify-content: center;
   align-items: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 6px;
-  grid-row-gap: 0px;
+  flex-direction: column;
+  margin: auto;
+  border-radius: 25px;
 }
 
 h4{
   color: black;
   font-weight: 300;
 }
+
+
+  .title {
+    font-size: 4em;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    font-size: 2em;
+    font-weight: 100;
+  }

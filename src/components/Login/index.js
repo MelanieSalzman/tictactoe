@@ -36,17 +36,17 @@ const Login = () => {
 
   return (
 
-    <div className='grid'>
+    <div className='container'>
       <div className='splashText'>
-        <h1>{TITLE}</h1>
-        <h3>{SUBTITLE}</h3>
+        <p className='title'>{TITLE}</p>
+        <p className='subtitle'>{SUBTITLE}</p>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form">
         <h4>{FORM_TITLE}</h4>
         <TextInput name="firstPlayer" placeholder="Player 1" onChange={handleChange} />
         <TextInput name="secondPlayer" placeholder="Player 2" onChange={handleChange} />
         <LoginButton onClick={handleSubmit} />
-        {areNamesCorrect ? <Redirect to="/game" /> : null }
+        {areNamesCorrect && <Redirect to="/game" />}
       </form>
     </div>
   )
