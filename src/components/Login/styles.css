@@ -1,0 +1,31 @@
+.background {
+  background: lightgray;
+}
+
+.splashText {
+  grid-column: 2 / 6;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  grid-column: 7/ 11;
+  background-color: #C8CCDB80;
+  margin-top: 10rem;
+  padding: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 6px;
+  grid-row-gap: 0px;
+}
+
+h4{
+  color: black;
+  font-weight: 300;
+}

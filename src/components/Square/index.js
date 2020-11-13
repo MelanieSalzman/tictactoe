@@ -1,13 +1,14 @@
-import React from 'react';
-import square from './styles.css';
-import classNames from 'classnames'
+import React from 'react'
+import './styles.css'
 
-export const Square = ({value, onClick}) => {
-    return (
-        <button
-            className={classNames({square})}
-            onClick={onClick}>
-            {value}
-        </button>
-    );
-}
+const Square =
+  ({ value, onClick }) => (
+    <button
+      className="square"
+      onClick={onClick}
+    >
+      {value}
+    </button>
+  )
+
+export default Square

@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles.css';
-import { Square } from '../Square/index'
+import Square from '../Square/index'
 
-export const Board = ({squares, onClick}) => {
+const Board = ({squares, onClick}) => {
 
     return (
         <div>
@@ -22,5 +22,7 @@ export const Board = ({squares, onClick}) => {
                 <Square value={squares[8]} onClick={() => onClick(8)} />
             </div>
         </div>
-    );
+    )
 }
+
+export default Board

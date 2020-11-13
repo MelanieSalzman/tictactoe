@@ -1,87 +1,77 @@
-import React, { useState } from 'react';
-import './styles.css';
-import { Board } from '../Board/index'
+import React, { useState } from 'react'
+import './styles.css'
+import Board from '../Board'
 
 export const Game = () => {
 
-    const [stepNumber, setStepNumber] = useState(0);
-    const [xIsNext, setXIsNext] = useState(true);
-    const [history, setHistory] = useState([{ squares: Array(9).fill(null) }])
+  const [stepNumber, setStepNumber] = useState(0);
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([{squares: Array(9).fill(null) }])
 
-    const handleClick = (i) => {
+  const historyCopy = history
+  const currentSquaresState = historyCopy[stepNumber].squares
+  const winner = getWinnerText(calculateWinnerLine(currentSquaresState),currentSquaresState)
+  const gameStatus = getGameStatusMessage(winner, xIsNext)
 
-        const historyCopy = history.slice(0, stepNumber + 1);
-        const current = historyCopy[historyCopy.length - 1];
-        const squaresCopy = current.squares.slice();
-
-        if (calculateWinner(squaresCopy) || squaresCopy[i]) {
-            return;
-        }
-
-        squaresCopy[i] = xIsNext ? 'X' : 'O';
-
-        setHistory(historyCopy.concat([{ squares: squaresCopy }]))
-        setStepNumber(historyCopy.length)
-        setXIsNext(!xIsNext)
-    }
-
-    const jumpTo = (step) => {
-        setStepNumber(step)
-        setXIsNext((step % 2) === 0)
-    }
-
-    const historyCopy = history;
-    const current = historyCopy[stepNumber];
-    const winner = calculateWinner(current.squares);
-
-    const moves = historyCopy.map((step, move) => {
-        const desc = move ?
-            'Go to move #' + move :
-            'Go to game start';
-        return (
-            <li key={move}>
-                <button onClick={() => jumpTo(move)}>{desc}</button>
-            </li>
-        );
-    });
-
-    let status;
-    if (winner) {
-        status = 'Winner: ' + winner;
-    } else {
-        status = 'Next player: ' + (xIsNext ? 'X' : 'O');
-    }
+  const showMovesHistory = historyCopy.map((step, move) => {
+    const desc = move ? 'Go to move #' + move : 'Go to game start';
 
     return (
-        <div className="game">
-            <div className="game-board">
-                <Board
-                    squares={current.squares}
-                    onClick={(i) => handleClick(i)}
-                />
-            </div>
-            <div className="game-info">
-                <div>{status}</div>
-                <ol>{moves}</ol>
-            </div>
-        </div>
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
+      </li>
     );
+  });
+
+  const jumpTo = (step) => {
+    setStepNumber(step)
+    setXIsNext((step % 2) === 0)
+  }
+
+  const handleClick = (index) => {
+    const historyCopy = history.slice(0, stepNumber + 1);
+    const currentSquaresState = historyCopy[historyCopy.length - 1].squares;
+    const squaresCopy = currentSquaresState.slice();
+
+    if (winner || squaresCopy[index]) return undefined;
+    
+    squaresCopy[index] = xIsNext ? 'X' : 'O';
+
+    setHistory(historyCopy.concat([{ squares: squaresCopy }]))
+    setStepNumber(historyCopy.length)
+    setXIsNext(!xIsNext)
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={currentSquaresState}
+          onClick={handleClick}
+        />
+      </div>
+      <div className="game-info">
+        <div>{gameStatus}</div>
+        <ol>{showMovesHistory}</ol>
+      </div>
+    </div>
+  );
 }
 
-const calculateWinner = (squaresText) => {
-    const boardLines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6],];
-    const winnerLine = boardLines.find(line => checkIfSquaresTextsAreEqual(line, squaresText))
-    return getTextOfWinner(winnerLine, squaresText)
+const getGameStatusMessage = (winner, xIsNext) => {
+  return winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O');
 }
 
-const checkIfSquaresTextsAreEqual = (line, squaresText) => {
-    const [firstPosition, secondPosition, thirdPosition] = line
-    return (squaresText[firstPosition] === squaresText[secondPosition] && squaresText[firstPosition] === squaresText[thirdPosition]) ? true : false
+const calculateWinnerLine = squares => {
+  const possibleWinnerLines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+ 
+  return possibleWinnerLines.find(line => {
+    const [first, second, third] = line
+
+    return (squares[first] && squares[first] === squares[second] && squares[first] === squares[third])
+  })
 }
 
-const getTextOfWinner = (winnerLine, squaresText) => {
-    return (winnerLine !== undefined) ? squaresText[winnerLine[0]] : null
+const getWinnerText = (winnerLine, squares) => {
+  return winnerLine && squares[winnerLine[0]]
 }
-
-
-

@@ -1,8 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
     margin: 20px;
+    background-image: url(../../assets/background.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+    font-family: 'Goldman', cursive;
+    color: white;
   }
-  
+
+  h1 {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 100;
+  }
+
   ol, ul {
     padding-left: 30px;
   }
