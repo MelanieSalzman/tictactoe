@@ -1,9 +1,10 @@
 import React from 'react'
 import './styles.css'
+import {Link} from 'react-router-dom'
 
-const LoginButton = () => {
+const LoginButton = ({onClick}) => {
   return (
-    <input type="submit" value="Play!" className="button" />
+    <Link to="/game" className="button" onClick={onClick}>Play!</Link>
   )
 }
 

@@ -14,9 +14,8 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     alert("Player 1 is " + players.firstPlayer + ' and Player 2 is ' + players.secondPlayer);
-    event.preventDefault();
   }
 
   return (
@@ -30,7 +29,7 @@ const Login = () => {
         <h4>Enter your names to start playing</h4>
         <TextInput name="firstPlayer" placeholder="Player 1" onChange={handleChange} />
         <TextInput name="secondPlayer" placeholder="Player 2" onChange={handleChange} />
-        <LoginButton />
+        <LoginButton onClick={handleSubmit}/>
       </form>
     </div>
   )

@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import './styles.css'
 import Board from '../Board'
 
-export const Game = () => {
+const Game = () => {
 
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
-  const [history, setHistory] = useState([{squares: Array(9).fill(null) }])
+  const [history, setHistory] = useState([{ squares: Array(9).fill(null) }])
 
   const historyCopy = history
   const currentSquaresState = historyCopy[stepNumber].squares
-  const winner = getWinnerText(calculateWinnerLine(currentSquaresState),currentSquaresState)
+  const winner = getWinnerText(calculateWinnerLine(currentSquaresState), currentSquaresState)
   const gameStatus = getGameStatusMessage(winner, xIsNext)
 
   const showMovesHistory = historyCopy.map((step, move) => {
@@ -34,7 +34,7 @@ export const Game = () => {
     const squaresCopy = currentSquaresState.slice();
 
     if (winner || squaresCopy[index]) return undefined;
-    
+
     squaresCopy[index] = xIsNext ? 'X' : 'O';
 
     setHistory(historyCopy.concat([{ squares: squaresCopy }]))
@@ -64,7 +64,7 @@ const getGameStatusMessage = (winner, xIsNext) => {
 
 const calculateWinnerLine = squares => {
   const possibleWinnerLines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
- 
+
   return possibleWinnerLines.find(line => {
     const [first, second, third] = line
 
@@ -75,3 +75,5 @@ const calculateWinnerLine = squares => {
 const getWinnerText = (winnerLine, squares) => {
   return winnerLine && squares[winnerLine[0]]
 }
+
+export default Game
