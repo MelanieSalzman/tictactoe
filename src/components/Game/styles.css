@@ -16,6 +16,16 @@ body {
 
   ol, ul {
     padding-left: 30px;
+
+  }
+
+  .move {
+    background-color: #ffffff90;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Goldman', cursive;
+    margin: 0.3rem;
   }
   
   .status {
@@ -25,9 +35,21 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+    height: 100%;
   }
-  
-  .game-info {
-    margin-left: 20px;
+  .game-board {
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 100%;
+    margin:6rem;
+  }
+
+  .game-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
   }
   
