@@ -5,10 +5,9 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Game from './components/Game'
-import Login from './components/Login'
-//Providers
-import PlayersInfoContext, { players, setPlayersInfo } from './providers/playersInfo';
+import Game from './pages/Game'
+import Login from './pages/Login'
+import PlayersInfoContext, {players} from './providers/playersInfo';
 
 function App() {
   return (
