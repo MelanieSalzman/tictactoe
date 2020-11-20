@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(rgba(14, 2, 58, 0.5), rgba(14, 2, 58, 0.5)), url(assets/images/background.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: black;
+    font-family: "Goldman", cursive;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+h4 {
+    color: black;
+    font-weight: 300;
+}
