@@ -11,7 +11,10 @@ import PlayersInfoContext, { players } from './providers/playersInfo'
 import './styles.scss'
 
 function App () {
+<<<<<<< HEAD
   // some comment
+=======
+>>>>>>> 65dc9f85642853a224f0be20924b4e806061ea02
   return (
     <div>
       <PlayersInfoContext.Provider value={players}>
