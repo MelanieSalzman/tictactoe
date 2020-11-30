@@ -1,0 +1,28 @@
+.square {
+  background: #ffffff90;
+  border: 0.1rem solid rgb(36, 5, 107);
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 5em;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 5em;
+  border-radius: 5px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.planetIcon {
+  width: 5rem;
+  height: 5rem;
+}
