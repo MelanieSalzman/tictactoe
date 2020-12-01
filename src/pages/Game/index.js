@@ -45,7 +45,7 @@ const Game = () => {
       </li>
     )
   })
-
+  
   const jumpTo = step => {
     setState(state => ({
       ...state,
