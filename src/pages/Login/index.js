@@ -5,25 +5,24 @@ import LoginButton from '../../components/LoginButton'
 import { useHistory } from 'react-router-dom'
 import { FirstPlayerContext } from '../../providers/firstPlayerData'
 import { SecondPlayerContext } from '../../providers/secondPlayerData'
-import { GameContext } from '../../providers/gameStatus'
+import useSetGameState from '../../hooks/useSetGameState'
 
 const Login = () => {
   const [startGame, setStartGame] = useState(false)
   const [, setFirstPlayer] = useContext(FirstPlayerContext)
   const [, setSecondPlayer] = useContext(SecondPlayerContext)
-  const [, setState] = useContext(GameContext)
+  const { setState } = useSetGameState()
   const history = useHistory()
 
   const onSubmit = values => {
     values.playerId === 1 && setFirstPlayer(firstPlayer => ({ ...firstPlayer, ...values }))
     values.playerId === 2 && setSecondPlayer(secondPlayer => ({ ...secondPlayer, ...values }))
 
-    setState(state => ({
-      ...state,
+    setState({
       history: [{ squares: Array(9).fill(null) }],
       stepNumber: 0,
       xIsNext: true
-    }))
+    })
 
     history.push('/game')
   }

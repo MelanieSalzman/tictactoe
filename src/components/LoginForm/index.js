@@ -14,7 +14,6 @@ const LoginForm = ({ playerId, onSubmit, startGame }) => {
     const values = { playerId, playerName, planetId }
     if (validatePlayer(values)) {
       onSubmit(values)
-      console.log('values', values)
     } else {
       setValidate(false)
     }
@@ -26,7 +25,6 @@ const LoginForm = ({ playerId, onSubmit, startGame }) => {
 
   const onSelect = id => {
     setPlanetId(id)
-    console.log('planetId', id)
   }
 
   return (

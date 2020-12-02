@@ -3,13 +3,14 @@ import './styles.scss'
 import Board from '../../components/Board'
 import { FirstPlayerContext } from '../../providers/firstPlayerData'
 import { SecondPlayerContext } from '../../providers/secondPlayerData'
-import { GameContext } from '../../providers/gameStatus'
+import useGameState from '../../hooks/useGameState'
 
 const Game = () => {
   const [firstPlayer] = useContext(FirstPlayerContext)
   const [secondPlayer] = useContext(SecondPlayerContext)
-  const [state, setState] = useContext(GameContext)
-  const { history, stepNumber, xIsNext } = state
+  const { currentGameState, setGameState } = useGameState()
+  if (!currentGameState) return null
+  const { history, stepNumber, xIsNext } = currentGameState
 
   const getWinnerText = (winnerLine, squares) => {
     if (winnerLine !== undefined) {
@@ -31,12 +32,11 @@ const Game = () => {
     return message
   }
 
-  const historyCopy = history
-  const currentSquaresState = historyCopy[stepNumber].squares
+  const currentSquaresState = history[stepNumber].squares
   const winner = getWinnerText(calculateWinnerLine(currentSquaresState), currentSquaresState)
   const gameStatusMessage = winner ? getWinnerMessage(winner) : getPlayerTurnMessage(xIsNext)
 
-  const showMovesHistory = historyCopy.map((step, move) => {
+  const showMovesHistory = history.map((step, move) => {
     const desc = move ? 'Go to move #' + move : 'Go to game start'
 
     return (
@@ -45,16 +45,17 @@ const Game = () => {
       </li>
     )
   })
-  
+
   const jumpTo = step => {
-    setState(state => ({
-      ...state,
+    setGameState({
+      ...currentGameState,
       stepNumber: step,
       xIsNext: (step % 2) === 0
-    }))
+    })
   }
 
   const handleClick = (index) => {
+    console.log(index)
     const historyCopy = history.slice(0, stepNumber + 1)
     const currentSquaresState = historyCopy[historyCopy.length - 1].squares
     const squaresCopy = currentSquaresState.slice()
@@ -63,14 +64,14 @@ const Game = () => {
 
     squaresCopy[index] = xIsNext
 
-    setState(state => ({
-      ...state,
+    setGameState({
+      ...currentGameState,
       history: historyCopy.concat([{
         squares: squaresCopy
       }]),
       stepNumber: historyCopy.length,
       xIsNext: !xIsNext
-    }))
+    })
   }
 
   return (
