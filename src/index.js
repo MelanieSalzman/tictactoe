@@ -8,31 +8,22 @@ import {
 import Game from './pages/Game'
 import Login from './pages/Login'
 import Landing from './pages/Landing'
-import { GameContextProvider } from './providers/gameStatus'
-import { FirstPlayerContextProvider } from './providers/firstPlayerData'
-import { SecondPlayerContextProvider } from './providers/secondPlayerData'
 import './styles.scss'
 
 function App () {
   return (
     <div>
-      <FirstPlayerContextProvider>
-        <SecondPlayerContextProvider>
-          <GameContextProvider>
-            <Switch>
-              <Route path='/game'>
-                <Game />
-              </Route>
-              <Route path='/login'>
-                <Login />
-              </Route>
-              <Route path='/'>
-                <Landing />
-              </Route>
-            </Switch>
-          </GameContextProvider>
-        </SecondPlayerContextProvider>
-      </FirstPlayerContextProvider>
+      <Switch>
+        <Route path='/game'>
+          <Game />
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/'>
+          <Landing />
+        </Route>
+      </Switch>
     </div>
   )
 }

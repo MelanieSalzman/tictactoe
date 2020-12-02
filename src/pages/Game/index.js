@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './styles.scss'
 import Board from '../../components/Board'
-import { FirstPlayerContext } from '../../providers/firstPlayerData'
-import { SecondPlayerContext } from '../../providers/secondPlayerData'
+import useFirstPlayerState from '../../hooks/useFirstPlayerState'
+import useSecondPlayerState from '../../hooks/useSecondPlayerState'
 import useGameState from '../../hooks/useGameState'
 
 const Game = () => {
-  const [firstPlayer] = useContext(FirstPlayerContext)
-  const [secondPlayer] = useContext(SecondPlayerContext)
+  const { firstPlayer } = useFirstPlayerState()
+  const { secondPlayer } = useSecondPlayerState()
   const { currentGameState, setGameState } = useGameState()
   if (!currentGameState) return null
   const { history, stepNumber, xIsNext } = currentGameState

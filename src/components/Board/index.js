@@ -1,13 +1,15 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './styles.scss'
 import Square from '../Square'
 import { getPlanetSrcById } from '../../Utils'
-import { FirstPlayerContext } from '../../providers/firstPlayerData'
-import { SecondPlayerContext } from '../../providers/secondPlayerData'
+import useFirstPlayerState from '../../hooks/useFirstPlayerState'
+import useSecondPlayerState from '../../hooks/useSecondPlayerState'
 
 const Board = ({ squares, onClick }) => {
-  const [firstPlayer] = useContext(FirstPlayerContext)
-  const [secondPlayer] = useContext(SecondPlayerContext)
+  const { firstPlayer } = useFirstPlayerState()
+  const { secondPlayer } = useSecondPlayerState()
+  if (!firstPlayer) return null
+  if (!secondPlayer) return null
 
   const showPlayerPlanet = (player) => {
     if (player !== null) {
