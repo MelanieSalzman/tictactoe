@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import './styles.scss'
+import calculateWinnerLine from '../../utils/calculateWinnerLine'
 import Board from '../../components/Board'
+import MovesHistory from '../../components/MovesHistory'
 import { FirstPlayerContext } from '../../providers/firstPlayerData'
 import { SecondPlayerContext } from '../../providers/secondPlayerData'
 import { GameContext } from '../../providers/gameStatus'
@@ -36,16 +38,6 @@ const Game = () => {
   const winner = getWinnerText(calculateWinnerLine(currentSquaresState), currentSquaresState)
   const gameStatusMessage = winner ? getWinnerMessage(winner) : getPlayerTurnMessage(xIsNext)
 
-  const showMovesHistory = historyCopy.map((step, move) => {
-    const desc = move ? 'Go to move #' + move : 'Go to game start'
-
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)} className='move'>{desc}</button>
-      </li>
-    )
-  })
-  
   const jumpTo = step => {
     setState(state => ({
       ...state,
@@ -83,20 +75,10 @@ const Game = () => {
       </div>
       <div className='game-info'>
         <div>{gameStatusMessage}</div>
-        <ol>{showMovesHistory}</ol>
+        <MovesHistory historyCopy={historyCopy} jumpTo={jumpTo} />
       </div>
     </div>
   )
-}
-
-const calculateWinnerLine = squares => {
-  const possibleWinnerLines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
-
-  return possibleWinnerLines.find(line => {
-    const [first, second, third] = line
-
-    return (squares[first] !== null && squares[first] === squares[second] && squares[first] === squares[third])
-  })
 }
 
 export default Game

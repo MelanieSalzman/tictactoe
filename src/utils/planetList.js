@@ -1,6 +1,6 @@
-import saturn from './assets/images/saturn.png'
-import earth from './assets/images/earth.png'
-import jupiter from './assets/images/jupiter.png'
+import saturn from '../assets/images/saturn.png'
+import earth from '../assets/images/earth.png'
+import jupiter from '../assets/images/jupiter.png'
 
 const planets = [{
   id: 0,

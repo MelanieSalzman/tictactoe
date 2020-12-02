@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import './styles.scss'
 import Square from '../Square'
-import { getPlanetSrcById } from '../../Utils'
+import { getPlanetSrcById } from '../../utils/planetList'
 import { FirstPlayerContext } from '../../providers/firstPlayerData'
 import { SecondPlayerContext } from '../../providers/secondPlayerData'
 

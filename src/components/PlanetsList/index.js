@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './styles.scss'
-import { planets } from '../../Utils'
+import { planets } from '../../utils/planetList'
 
 const PlanetList = ({ playerId, onSelect }) => {
   const [selectedPlanetId, setSelectedPlanetId] = useState(0)
