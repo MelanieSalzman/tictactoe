@@ -35,7 +35,8 @@ const Game = () => {
   }
 
   const currentSquaresState = history[stepNumber].squares
-  const winner = getWinnerText(calculateWinnerLine(currentSquaresState), currentSquaresState)
+  const winnerLine = calculateWinnerLine(currentSquaresState)
+  const winner = getWinnerText(winnerLine, currentSquaresState)
   const gameStatusMessage = winner ? getWinnerMessage(winner) : getPlayerTurnMessage(xIsNext)
 
   const jumpTo = step => {
@@ -71,6 +72,7 @@ const Game = () => {
         <Board
           squares={currentSquaresState}
           onClick={handleClick}
+          winnerLine={winnerLine}
         />
       </div>
       <div className='game-info'>

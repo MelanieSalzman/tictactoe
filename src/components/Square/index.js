@@ -2,10 +2,10 @@ import React from 'react'
 import './styles.scss'
 
 const Square =
-  ({ planetSrc, onClick }) => {
+  ({ planetSrc, onClick, winner }) => {
     return (
       <button
-        className='square'
+        className={winner ? 'squareWinner' : 'square'}
         onClick={onClick}
       >
         {planetSrc != null ? <img src={planetSrc} alt='planet' className='planetIcon' /> : null}
