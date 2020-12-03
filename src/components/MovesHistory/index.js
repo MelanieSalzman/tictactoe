@@ -4,10 +4,13 @@ import './styles.scss'
 const MovesHistory = ({ historyCopy, jumpTo }) => {
   const getCellsByRow = (init, qty) => {
     const cells = []
+
     for (let index = init; index < init + qty; index++) {
       if (historyCopy[index]) {
         cells.push(
-          <button key={index} onClick={() => jumpTo(index)} className='move'>{index.toString()}</button>
+          <button key={index} onClick={() => jumpTo(index)} className={historyCopy.length - 1 === index ? 'moveSelected' : 'move'}>
+            {index.toString()}
+          </button>
         )
       }
     }
@@ -19,7 +22,7 @@ const MovesHistory = ({ historyCopy, jumpTo }) => {
     <div className='table'>
       <h3>Moves history</h3>
       <div className='row'>
-        {historyCopy[0] && <button key={0} onClick={() => jumpTo(0)} className='move'>Go to game start</button>}
+        {historyCopy[0] && <button key={0} onClick={() => jumpTo(0)} className={historyCopy.length - 1 === 0 ? 'moveSelected' : 'move'}>Go to game start</button>}
       </div>
       <div className='row'>
         {getCellsByRow(1, 3)}
