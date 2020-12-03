@@ -3,28 +3,19 @@ import './styles.scss'
 import LoginForm from '../../components/LoginForm'
 import LoginButton from '../../components/LoginButton'
 import { useHistory } from 'react-router-dom'
-import useFirstPlayerState from '../../hooks/useFirstPlayerState'
-import useSecondPlayerState from '../../hooks/useSecondPlayerState'
-import useGameState from '../../hooks/useGameState'
+import useGame from '../../hooks/useGame'
+
+/* global localStorage */
 
 const Login = () => {
-  const [startGame, setStartGame] = useState(false)
-  const { firstPlayer, setFirstPlayer } = useFirstPlayerState()
-  const { secondPlayer, setSecondPlayer } = useSecondPlayerState()
-  const { setGameState } = useGameState()
-
+  const [player1, setPlayer1] = useState(null)
+  const [player2, setPlayer2] = useState(null)
+  const { resetGame } = useGame()
   const history = useHistory()
 
-  const onSubmit = values => {
-    values.playerId === 1 && setFirstPlayer(({ ...firstPlayer, ...values }))
-    values.playerId === 2 && setSecondPlayer(({ ...secondPlayer, ...values }))
-
-    setGameState({
-      history: [{ squares: Array(9).fill(null) }],
-      stepNumber: 0,
-      xIsNext: true
-    })
-
+  const onSubmit = () => {
+    localStorage.setItem('players', JSON.stringify([player1, player2]))
+    resetGame()
     history.push('/game')
   }
 
@@ -32,10 +23,10 @@ const Login = () => {
     <section className='playersSection'>
       <h2>Complete your profile to start playing</h2>
       <div className='formSection'>
-        <LoginForm playerId={1} onSubmit={onSubmit} startGame={startGame} />
-        <LoginForm playerId={2} onSubmit={onSubmit} startGame={startGame} />
+        <LoginForm playerId={1} onValuesChange={setPlayer1} />
+        <LoginForm playerId={2} onValuesChange={setPlayer2} />
       </div>
-      <LoginButton text='Start game' onClick={() => setStartGame(true)} />
+      <LoginButton text='Start game' onClick={onSubmit} />
     </section>
   )
 }

@@ -1,5 +1,7 @@
-.board-row:after {
-  clear: both;
-  content: "";
+.board {
   display: table;
+}
+
+.board-row {
+  display: table-row;
 }

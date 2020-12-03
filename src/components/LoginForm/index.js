@@ -3,37 +3,42 @@ import TextInput from '../TextInput'
 import './styles.scss'
 import PlanetsList from '../PlanetsList'
 
-const LoginForm = ({ playerId, onSubmit, startGame }) => {
-  const [playerName, setPlayerName] = useState('')
-  const [planetId, setPlanetId] = useState(0)
-  const [validate, setValidate] = useState(true)
-
+const LoginForm = ({ playerId, onValuesChange }) => {
   const FORM_TITLE = 'Player ' + playerId
+  const [validate, setValidate] = useState(true)
+  const [values, setValues] = useState({ playerId, planetId: 0 })
 
-  const handleSubmit = () => {
-    const values = { playerId, playerName, planetId }
+  useEffect(() => {
     if (validatePlayer(values)) {
-      onSubmit(values)
+      onValuesChange(values)
     } else {
       setValidate(false)
     }
-  }
-
-  useEffect(() => {
-    return startGame ? handleSubmit() : null
-  }, [startGame, handleSubmit])
-
-  const onSelect = id => {
-    setPlanetId(id)
-  }
+  }, [values, onValuesChange])
 
   return (
     <div className='form'>
       <h3>{FORM_TITLE}</h3>
-      <TextInput name={playerId} placeholder='Enter your name' onChange={(e) => setPlayerName(e.target.value)} validate={validate} />
+      <TextInput
+        name={playerId}
+        placeholder='Enter your name'
+        onChange={e =>
+          setValues({
+            ...values,
+            playerName: e.target.value
+          })}
+        validate={validate}
+      />
       <p>Choose your planet</p>
       <div className='planets'>
-        <PlanetsList onSelect={onSelect} playerId={playerId} />
+        <PlanetsList
+          onSelect={id =>
+            setValues({
+              ...values,
+              planetId: id
+            })}
+          playerId={playerId}
+        />
       </div>
     </div>
   )

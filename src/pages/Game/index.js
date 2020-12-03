@@ -2,17 +2,15 @@ import React from 'react'
 import './styles.scss'
 import calculateWinnerLine from '../../utils/calculateWinnerLine'
 import Board from '../../components/Board'
-import useFirstPlayerState from '../../hooks/useFirstPlayerState'
-import useSecondPlayerState from '../../hooks/useSecondPlayerState'
-import useGameState from '../../hooks/useGameState'
+import usePlayers from '../../hooks/usePlayers'
+import useGame from '../../hooks/useGame'
 import MovesHistory from '../../components/MovesHistory'
 
 const Game = () => {
-  const { firstPlayer } = useFirstPlayerState()
-  const { secondPlayer } = useSecondPlayerState()
-  const { currentGameState, setGameState } = useGameState()
-  if (!currentGameState) return null
-  const { history, stepNumber, xIsNext } = currentGameState
+  const { players } = usePlayers()
+  const { game, setGame } = useGame()
+  const [firstPlayer, secondPlayer] = players
+  const { history, stepNumber, xIsNext } = game
 
   const getWinnerText = (winnerLine, squares) => {
     if (winnerLine !== undefined) {
@@ -40,10 +38,10 @@ const Game = () => {
   const gameStatusMessage = winner ? getWinnerMessage(winner) : getPlayerTurnMessage(xIsNext)
 
   const jumpTo = step => {
-    setGameState({
-      ...currentGameState,
+    setGame({
+      ...game,
       stepNumber: step,
-      xIsNext: (step % 2) === 0
+      xIsNext: step % 2 === 0
     })
   }
 
@@ -56,11 +54,13 @@ const Game = () => {
 
     squaresCopy[index] = xIsNext
 
-    setGameState({
-      ...currentGameState,
-      history: historyCopy.concat([{
-        squares: squaresCopy
-      }]),
+    setGame({
+      ...game,
+      history: historyCopy.concat([
+        {
+          squares: squaresCopy
+        }
+      ]),
       stepNumber: historyCopy.length,
       xIsNext: !xIsNext
     })
