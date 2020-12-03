@@ -1,17 +1,18 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './styles.scss'
 import calculateWinnerLine from '../../utils/calculateWinnerLine'
 import Board from '../../components/Board'
+import useFirstPlayerState from '../../hooks/useFirstPlayerState'
+import useSecondPlayerState from '../../hooks/useSecondPlayerState'
+import useGameState from '../../hooks/useGameState'
 import MovesHistory from '../../components/MovesHistory'
-import { FirstPlayerContext } from '../../providers/firstPlayerData'
-import { SecondPlayerContext } from '../../providers/secondPlayerData'
-import { GameContext } from '../../providers/gameStatus'
 
 const Game = () => {
-  const [firstPlayer] = useContext(FirstPlayerContext)
-  const [secondPlayer] = useContext(SecondPlayerContext)
-  const [state, setState] = useContext(GameContext)
-  const { history, stepNumber, xIsNext } = state
+  const { firstPlayer } = useFirstPlayerState()
+  const { secondPlayer } = useSecondPlayerState()
+  const { currentGameState, setGameState } = useGameState()
+  if (!currentGameState) return null
+  const { history, stepNumber, xIsNext } = currentGameState
 
   const getWinnerText = (winnerLine, squares) => {
     if (winnerLine !== undefined) {
@@ -33,20 +34,20 @@ const Game = () => {
     return message
   }
 
-  const historyCopy = history
-  const currentSquaresState = historyCopy[stepNumber].squares
+  const currentSquaresState = history[stepNumber].squares
   const winner = getWinnerText(calculateWinnerLine(currentSquaresState), currentSquaresState)
   const gameStatusMessage = winner ? getWinnerMessage(winner) : getPlayerTurnMessage(xIsNext)
 
   const jumpTo = step => {
-    setState(state => ({
-      ...state,
+    setGameState({
+      ...currentGameState,
       stepNumber: step,
       xIsNext: (step % 2) === 0
-    }))
+    })
   }
 
   const handleClick = (index) => {
+    console.log(index)
     const historyCopy = history.slice(0, stepNumber + 1)
     const currentSquaresState = historyCopy[historyCopy.length - 1].squares
     const squaresCopy = currentSquaresState.slice()
@@ -55,14 +56,14 @@ const Game = () => {
 
     squaresCopy[index] = xIsNext
 
-    setState(state => ({
-      ...state,
+    setGameState({
+      ...currentGameState,
       history: historyCopy.concat([{
         squares: squaresCopy
       }]),
       stepNumber: historyCopy.length,
       xIsNext: !xIsNext
-    }))
+    })
   }
 
   return (
@@ -75,7 +76,7 @@ const Game = () => {
       </div>
       <div className='game-info'>
         <div>{gameStatusMessage}</div>
-        <MovesHistory historyCopy={historyCopy} jumpTo={jumpTo} />
+        <MovesHistory historyCopy={history} jumpTo={jumpTo} />
       </div>
     </div>
   )

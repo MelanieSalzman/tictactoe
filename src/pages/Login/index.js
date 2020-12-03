@@ -1,29 +1,29 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import './styles.scss'
 import LoginForm from '../../components/LoginForm'
 import LoginButton from '../../components/LoginButton'
 import { useHistory } from 'react-router-dom'
-import { FirstPlayerContext } from '../../providers/firstPlayerData'
-import { SecondPlayerContext } from '../../providers/secondPlayerData'
-import { GameContext } from '../../providers/gameStatus'
+import useFirstPlayerState from '../../hooks/useFirstPlayerState'
+import useSecondPlayerState from '../../hooks/useSecondPlayerState'
+import useGameState from '../../hooks/useGameState'
 
 const Login = () => {
   const [startGame, setStartGame] = useState(false)
-  const [, setFirstPlayer] = useContext(FirstPlayerContext)
-  const [, setSecondPlayer] = useContext(SecondPlayerContext)
-  const [, setState] = useContext(GameContext)
+  const { firstPlayer, setFirstPlayer } = useFirstPlayerState()
+  const { secondPlayer, setSecondPlayer } = useSecondPlayerState()
+  const { setGameState } = useGameState()
+
   const history = useHistory()
 
   const onSubmit = values => {
-    values.playerId === 1 && setFirstPlayer(firstPlayer => ({ ...firstPlayer, ...values }))
-    values.playerId === 2 && setSecondPlayer(secondPlayer => ({ ...secondPlayer, ...values }))
+    values.playerId === 1 && setFirstPlayer(({ ...firstPlayer, ...values }))
+    values.playerId === 2 && setSecondPlayer(({ ...secondPlayer, ...values }))
 
-    setState(state => ({
-      ...state,
+    setGameState({
       history: [{ squares: Array(9).fill(null) }],
       stepNumber: 0,
       xIsNext: true
-    }))
+    })
 
     history.push('/game')
   }
