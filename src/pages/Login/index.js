@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import useGame from '../../hooks/useGame'
 
 /* global localStorage */
+// Player fields
 
 const Login = () => {
   const [player1, setPlayer1] = useState(null)
@@ -14,7 +15,7 @@ const Login = () => {
   const history = useHistory()
 
   const onSubmit = () => {
-    localStorage.setItem('players', JSON.stringify([player1, player2]))
+    setPlayers([player1, player2])
     resetGame()
     history.push('/game')
   }
@@ -30,5 +31,8 @@ const Login = () => {
     </section>
   )
 }
+
+const setPlayers = (players) =>
+  localStorage.setItem('players', JSON.stringify(players))
 
 export default Login

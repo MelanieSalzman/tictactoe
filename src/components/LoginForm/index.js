@@ -6,7 +6,7 @@ import PlanetsList from '../PlanetsList'
 const LoginForm = ({ playerId, onValuesChange }) => {
   const FORM_TITLE = 'Player ' + playerId
   const [validate, setValidate] = useState(true)
-  const [values, setValues] = useState({ playerId, planetId: 0 })
+  const [values, setValues] = useState({ playerId, planetId: 0, playerName: '' })
 
   useEffect(() => {
     if (validatePlayer(values)) {
