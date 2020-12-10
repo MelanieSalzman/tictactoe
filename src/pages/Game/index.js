@@ -117,5 +117,4 @@ const calculateWinnerLine = squares => {
     )
   })
 }
-
 export default Game
