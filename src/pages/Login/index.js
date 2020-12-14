@@ -4,12 +4,14 @@ import PlayerFields from '../../components/PlayerFields'
 import LoginButton from '../../components/LoginButton'
 import { useHistory } from 'react-router-dom'
 import useGame from '../../hooks/useGame'
+import usePlayers from '../../hooks/usePlayers'
 
 /* global localStorage */
 
 const Login = () => {
   const [player1, setPlayer1] = useState(null)
   const [player2, setPlayer2] = useState(null)
+  const { setPlayers } = usePlayers()
   const [validate, setValidate] = useState(null)
   const { resetGame } = useGame()
   const history = useHistory()
@@ -36,9 +38,6 @@ const Login = () => {
     </section>
   )
 }
-
-const setPlayers = (players) =>
-  localStorage.setItem('players', JSON.stringify(players))
 
 const validatePlayer = player => {
   const { playerId, playerName, planetId } = player
