@@ -3,17 +3,12 @@ import TextInput from '../TextInput'
 import './styles.scss'
 import PlanetsList from '../PlanetsList'
 
-const LoginForm = ({ playerId, onValuesChange }) => {
+const PlayerFields = ({ playerId, onValuesChange, validate }) => {
   const FORM_TITLE = 'Player ' + playerId
-  const [validate, setValidate] = useState(true)
   const [values, setValues] = useState({ playerId, planetId: 0, playerName: '' })
 
   useEffect(() => {
-    if (validatePlayer(values)) {
-      onValuesChange(values)
-    } else {
-      setValidate(false)
-    }
+    onValuesChange(values)
   }, [values, onValuesChange])
 
   return (
@@ -44,9 +39,4 @@ const LoginForm = ({ playerId, onValuesChange }) => {
   )
 }
 
-const validatePlayer = values => {
-  const { playerId, playerName, planetId } = values
-  return playerId !== null && playerName !== '' && planetId !== null
-}
-
-export default LoginForm
+export default PlayerFields

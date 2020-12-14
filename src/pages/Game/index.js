@@ -21,7 +21,7 @@ const Game = () => {
     })
   }
 
-  const handleClick = (index) => {
+  const handleClick = index => {
     const historyCopy = history.slice(0, stepNumber + 1)
     const currentSquaresState = historyCopy[historyCopy.length - 1].squares
     const squaresCopy = currentSquaresState.slice()
