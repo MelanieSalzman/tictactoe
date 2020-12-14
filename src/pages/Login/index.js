@@ -1,28 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './styles.scss'
-import { useHistory } from 'react-router-dom'
-import { setPlayersInfo } from '../../providers/playersInfo'
 import LoginForm from '../../components/LoginForm'
-
-const TITLE = 'Tic Tac Toe Intergalactic'
-const SUBTITLE = 'Conquer planets with your friends'
+import LoginButton from '../../components/LoginButton'
+import { useHistory } from 'react-router-dom'
+import useGame from '../../hooks/useGame'
 
 const Login = () => {
+  const [player1, setPlayer1] = useState(null)
+  const [player2, setPlayer2] = useState(null)
+  const { resetGame } = useGame()
   const history = useHistory()
 
-  const onSubmit = (values) => {
-    setPlayersInfo(values)
+  /* global localStorage */
+
+  const onSubmit = () => {
+    localStorage.setItem('players', JSON.stringify([player1, player2]))
+    resetGame()
     history.push('/game')
   }
 
   return (
-    <div className='container'>
-      <div className='splashText'>
-        <p className='title'>{TITLE}</p>
-        <p className='subtitle'>{SUBTITLE}</p>
+    <section className='playersSection'>
+      <h2>Complete your profile to start playing</h2>
+      <div className='formSection'>
+        <LoginForm playerId={1} onValuesChange={setPlayer1} />
+        <LoginForm playerId={2} onValuesChange={setPlayer2} />
       </div>
-      <LoginForm onSubmit={onSubmit} />
-    </div>
+      <LoginButton text='Start game' onClick={onSubmit} />
+    </section>
   )
 }
 

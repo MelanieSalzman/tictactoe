@@ -1,33 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextInput from '../TextInput'
 import './styles.scss'
-const FORM_TITLE = 'Enter your names to start playing'
+import PlanetsList from '../PlanetsList'
 
-const LoginForm = ({ onSubmit }) => {
-  const [firstPlayer, setFirstPlayer] = useState('')
-  const [secondPlayer, setSecondPlayer] = useState('')
+const LoginForm = ({ playerId, onValuesChange }) => {
+  const FORM_TITLE = 'Player ' + playerId
+  const [validate, setValidate] = useState(true)
+  const [values, setValues] = useState({ playerId, planetId: 0 })
 
-  const handleSubmit = () => {
-    const values = { firstPlayer, secondPlayer }
-    if (validatePlayerNames(values)) {
-      onSubmit(values)
+  useEffect(() => {
+    if (validatePlayer(values)) {
+      onValuesChange(values)
     } else {
-      window.alert('Debes completar los campos correctamente')
+      setValidate(false)
     }
-  }
+  }, [values, onValuesChange])
 
   return (
-    <form onSubmit={handleSubmit} className='form'>
-      <h4>{FORM_TITLE}</h4>
-      <TextInput name='firstPlayer' placeholder='Player 1' onChange={(e) => setFirstPlayer(e.target.value)} />
-      <TextInput name='secondPlayer' placeholder='Player 2' onChange={(e) => setSecondPlayer(e.target.value)} />
-      <button type='submit'>Play!</button>
-    </form>
+    <div className='form'>
+      <h3>{FORM_TITLE}</h3>
+      <TextInput
+        name={playerId}
+        placeholder='Enter your name'
+        onChange={e =>
+          setValues({
+            ...values,
+            playerName: e.target.value
+          })}
+        validate={validate}
+      />
+      <p>Choose your planet</p>
+      <div className='planets'>
+        <PlanetsList
+          onSelect={id =>
+            setValues({
+              ...values,
+              planetId: id
+            })}
+          playerId={playerId}
+        />
+      </div>
+    </div>
   )
 }
 
-const validatePlayerNames = ({ firstPlayer, secondPlayer }) => {
-  return firstPlayer && secondPlayer && firstPlayer !== secondPlayer
+const validatePlayer = values => {
+  const { playerId, playerName, planetId } = values
+  return playerId !== null && playerName !== '' && planetId !== null
 }
 
 export default LoginForm
