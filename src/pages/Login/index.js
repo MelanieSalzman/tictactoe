@@ -6,8 +6,6 @@ import { useHistory } from 'react-router-dom'
 import useGame from '../../hooks/useGame'
 import usePlayers from '../../hooks/usePlayers'
 
-/* global localStorage */
-
 const Login = () => {
   const [player1, setPlayer1] = useState(null)
   const [player2, setPlayer2] = useState(null)

@@ -7,22 +7,17 @@ const GameStatus = ({ currentSquaresState, winnerLine, xIsNext }) => {
   const [firstPlayer, secondPlayer] = players
 
   const getWinnerText = () => {
-    if (winnerLine !== undefined) {
-      if (currentSquaresState[winnerLine[0]]) {
-        return firstPlayer.playerName
-      } else {
-        return secondPlayer.playerName
-      }
-    } else return null
+    const winnerPlayer = currentSquaresState[winnerLine[0]]
+    if (winnerPlayer) return firstPlayer.playerName
+
+    return secondPlayer.playerName
   }
 
   const getWinnerMessage = () => {
     return 'Winner: ' + winner
   }
 
-  const getPlayerTurnMessage = () => {
-    return xIsNext ? 'Next player: ' + firstPlayer.playerName : 'Next player: ' + secondPlayer.playerName
-  }
+  const getPlayerTurnMessage = () => 'Next player:  ' + (xIsNext ? firstPlayer : secondPlayer).playerName
 
   const getDrawMessage = () => {
     return 'Draw'
@@ -32,11 +27,17 @@ const GameStatus = ({ currentSquaresState, winnerLine, xIsNext }) => {
     return currentSquaresState.every(square => square !== null)
   }
 
-  const winner = getWinnerText()
-  const gameStatusMessage = winner ? getWinnerMessage(winner) : isDraw() ? getDrawMessage() : getPlayerTurnMessage()
+  const winner = winnerLine && getWinnerText()
+
+  const getGameStatusMessage = () => {
+    if (winner) return getWinnerMessage(winner)
+    if (!winner && isDraw()) return getDrawMessage()
+
+    return getPlayerTurnMessage()
+  }
 
   return (
-    <div>{gameStatusMessage}</div>
+    <div>{getGameStatusMessage()}</div>
   )
 }
 
